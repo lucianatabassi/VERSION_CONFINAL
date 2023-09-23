@@ -21,11 +21,13 @@ public class CARTEL_FINAL : MonoBehaviour
     public Material skyboxMaterial;
     public Camera miCamara;
 
-    public Light myLight;          // Referencia a la luz que deseas modificar.
-    public float aumentoIntensidad = 2.0f; // Aumento temporal de la intensidad.
-    public float duracionAumento = 2.0f;  // Duración del aumento en segundos.
-    private float intensidadOriginal; // Almacena la intensidad original de la luz.
+    //public Light myLight;          // Referencia a la luz que deseas modificar.
+    //public float aumentoIntensidad = 2.0f; // Aumento temporal de la intensidad.
+   // public float duracionAumento = 2.0f;  // Duración del aumento en segundos.
+   // private float intensidadOriginal; // Almacena la intensidad original de la luz.
     public Light luzGeneral;
+
+    public Animator animator;
 
 
 
@@ -42,29 +44,41 @@ public class CARTEL_FINAL : MonoBehaviour
 
         luzGeneral.intensity = 0.2f;
 
-        myLight.enabled = false;
-        intensidadOriginal = myLight.intensity;
+       // myLight.enabled = false;
+       // intensidadOriginal = myLight.intensity;
+
+      //  animator = GetComponent<Animator>();      
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (scriptPajaro.pajaroCompletado && scriptPez.pezCompletado && scriptCarpincho.carpinchoCompletado && scriptabeja.abejacompletado)
+        
+         if (scriptPajaro.pajaroCompletado && scriptPez.pezCompletado && scriptCarpincho.carpinchoCompletado && scriptabeja.abejacompletado)
         {
-            if (!musicaReproducida)
+            if (!musicaReproducida )
             {
+      
                 cartel.SetActive(true);
                 cartelTapado.SetActive(false);
                 audioSource.PlayOneShot(musicaFinal);
                 musicaReproducida = true;
                 desactivarNiebla = true;
-                StartCoroutine(AumentarIntensidadPorTiempo());
+                animator.SetBool("final", true);
+                luzGeneral.intensity = 2.0f;
+                //StartCoroutine(AumentarIntensidadPorTiempo());
+
+            }
+            else
+            {
+                animator.SetBool("final", false);
             }
             
-            
+
         }
 
+ 
         if (desactivarNiebla)
         {
             
@@ -84,11 +98,12 @@ public class CARTEL_FINAL : MonoBehaviour
             }
         }
 
-        
-        
+
     }
 
-    private IEnumerator AumentarIntensidadPorTiempo()
+  
+
+       /* private IEnumerator AumentarIntensidadPorTiempo()
     {
         myLight.enabled = true;
 
@@ -112,7 +127,7 @@ public class CARTEL_FINAL : MonoBehaviour
 
         yield break;
 
-    }
+    }*/
 
     IEnumerator updateTheFog()
     {
@@ -129,4 +144,11 @@ public class CARTEL_FINAL : MonoBehaviour
         }
         // Puedes usar "yield break;" para detener el bucle si es necesario.
     }
+
+   
+
+    
+
+
+
 }
